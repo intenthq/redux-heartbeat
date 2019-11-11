@@ -14,7 +14,7 @@ import {
   TimestampedActions
 } from '../src/index'
 
-type Handler<S> = (next: Dispatch<S>) => Dispatch<S>
+type Handler<S> = (next: Dispatch<Action>) => Dispatch<Action>
 
 describe('Redux heartbeat', () => {
 

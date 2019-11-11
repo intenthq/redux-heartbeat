@@ -50,14 +50,14 @@ export interface HeartbeatAPI {
 export type HeartbeatPredicate<S> = (state: S, action: Action) => boolean
 
 export function createHeartbeat<S>(ms: number = 30000,
-                                   dispatch?: Dispatch<S>,
+                                   dispatch?: Dispatch<Action>,
                                    predicate: HeartbeatPredicate<S> =
                                      (state: S, action: Action): boolean => true,
                                    autostart: boolean = true,
                                    name: string = DEFAULT_HEATBEAT_NAME
                                   ): HeartbeatMiddleware {
-  let interval: number
-  let dispatcher: Dispatch<S> | undefined = dispatch // eagerly assign if needed to beat before first action occurs
+  let interval: NodeJS.Timeout
+  let dispatcher: Dispatch<Action> | undefined = dispatch // eagerly assign if needed to beat before first action occurs
 
   const ventrical: TimestampedActions = []
   const now = (): number => Date.now()
@@ -81,9 +81,9 @@ export function createHeartbeat<S>(ms: number = 30000,
     beat()
   }
   const api: HeartbeatAPI = {start, flush, beat, pause, stop, stethescope}
-  const middleware: Middleware = (middlewareApi: MiddlewareAPI<S>) => {
+  const middleware: Middleware = (middlewareApi: MiddlewareAPI<any>) => {
       if (!dispatcher) dispatcher = middlewareApi.dispatch // cache dispatch so can be used to send the collated action
-      return (next: Dispatch<S>): Dispatch<S> => {
+      return (next: Dispatch<Action>): Dispatch<Action> => {
         return (action: Action) => {
           // always filter out heartbeat actions, and any denied by predicate
           if (action.type !== HEARTBEAT_ACTION_TYPE && predicate(middlewareApi.getState(), action)) add(action)

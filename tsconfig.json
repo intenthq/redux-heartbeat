@@ -18,7 +18,8 @@
     "noEmitOnError": true,
     "pretty": true,
     "removeComments": true,
-    "noStrictGenericChecks": true
+    "noStrictGenericChecks": true,
+    "lib": ["es2015"]
   },
   "exclude": [
     "dist",
