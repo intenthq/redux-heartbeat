@@ -12,10 +12,10 @@
     "dist/src"
   ],
   "scripts": {
-    "preversion": "yarn test",
-    "prepublish": "yarn test",
+    "preversion": "npm test",
+    "prepublish": "npm test",
     "build": "tsc --project . --module commonjs",
-    "pretest": "yarn build",
+    "pretest": "npm run build",
     "test": "mocha --require @babel/register ./dist/test/test.js"
   },
   "keywords": [
