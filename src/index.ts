@@ -63,7 +63,7 @@ export function createHeartbeat<S>(ms: number = 30000,
                                    name: string = DEFAULT_HEATBEAT_NAME,
                                    transform: HeartbeatTransform<S> = (state: S, action: Action): AnyAction => action
                                   ): HeartbeatMiddleware {
-  let interval: number
+  let interval: NodeJS.Timeout
   let dispatcher: Dispatch<S> | undefined = dispatch // eagerly assign if needed to beat before first action occurs
 
   const ventrical: TimestampedActions = []
