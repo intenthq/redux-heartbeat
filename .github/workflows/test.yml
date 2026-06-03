@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: intenthq/github-actions/.github/actions/checkout@v4
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: intenthq/github-actions/.github/actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
